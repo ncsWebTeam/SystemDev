@@ -11,7 +11,7 @@ AUTHORITY_LEVEL = 9
 dns = {
     'user': 'root',
     'host': 'localhost',
-    'password': 'kouki67',
+    'password': '',
     'database': 'System'
 }
 db = MySQL(**dns)
@@ -37,11 +37,11 @@ def systemLoginCheck():
     return redirect(url_for("home"))
 #----------------ログイン画面処理--------------------END↑
 
-#----------------商品一覧画面処理--------------------STR ↓
+#------------------------------------STR ↓
 @app.route("/home")
 def home():
     return render_template("system/home.html")
-#----------------商品一覧画面処理--------------------END↑
+#------------------------------------END↑
 
 #region エラー処理
 @app.errorhandler(404) # 404エラーが発生した場合の処理
