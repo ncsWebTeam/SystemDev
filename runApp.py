@@ -37,16 +37,18 @@ def systemLoginCheck():
     return redirect(url_for("home"))
 #----------------ログイン画面処理--------------------END↑
 
-#------------------------------------STR ↓
+#------------------ホーム画面------------------STR ↓
 @app.route("/home")
 def home():
     return render_template("system/home.html")
-#------------------------------------END↑
+#----------------ホーム画面--------------------END↑
+
+
 
 #region エラー処理
 @app.errorhandler(404) # 404エラーが発生した場合の処理
 def error_404(error):
-    print("404エラー")
+    # print("404エラー")
     return redirect(url_for("index"))
 
 @app.errorhandler(405) # 405エラーが発生した場合の処理
