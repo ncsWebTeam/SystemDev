@@ -2,10 +2,12 @@
 import sys
 sys.dont_write_bytecode = True
 
-from flask import render_template, request, redirect, Blueprint ,url_for
+from flask import render_template, request, redirect, Blueprint ,url_for,session
 from dataStore.MySQL import MySQL
+from datetime import timedelta
 
 systemMain = Blueprint("systemMain",__name__)
+
 
 
 #データベースを使うための情報
@@ -21,7 +23,7 @@ db = MySQL(**dns)
 '''
 ログイン管理
 '''
-def isLogin(name,password):
+def is_login(name,password):
 
     sql = "SELECT password FROM member WHERE name=%s"
     result = db.query(sql=sql,args=(name,))
@@ -39,6 +41,9 @@ def isLogin(name,password):
 
 #endregion
 
+#region 関数
+
+#endregion
 
 #region 画面
 @systemMain.route("/")
@@ -49,15 +54,19 @@ def index(msg=None):
     return render_template("system/system_login.html",err_msg = message, title="ログイン")
 
 @systemMain.route("/systemLoginCheck", methods=["POST"])
-def systemLoginCheck():
+def system_login_check():
     
     # 入力値の取得
-    userName = request.form.get("userName")
+    user_name = request.form.get("userName")
     password = request.form.get("password")
 
     #ログイン処理
-    if isLogin(userName,password):
-        #ログインが成功したらホーム画面に移動する
+    if is_login(user_name,password):
+        #ログインが成功したら
+        #セッションに名前を登録
+        session.permanent = True
+        session["system_user"] = user_name
+        #ホーム画面に移動する
         return redirect(url_for('.home'))
     else:
         #失敗したらエラーメッセーとともにログイン画面に戻す
@@ -65,8 +74,18 @@ def systemLoginCheck():
 
 @systemMain.route("/home")
 def home():
-    #ホーム画面を表示する
-    return render_template("system/system_home.html", title="ホーム")
+    #sessionの確認
+    if "system_user" in session:
+        #ホーム画面を表示する
+        print(session["system_user"])
+        return render_template("system/system_home.html", title="ホーム")
+    else:
+        return redirect(url_for('.index', msg="ログインしてください"))
+    
+@systemMain.route("/logout")
+def logout():
+    session.pop('system_user', None)
+    return redirect(url_for('.index'))
 #endregion
 
 

@@ -4,9 +4,14 @@ sys.dont_write_bytecode = True
 
 from flask import Flask,redirect,url_for
 #ページインポート
-from apps.systemMain import systemMain
+from apps.system_main import systemMain
+from datetime import timedelta
 
 app = Flask(__name__)
+
+#sessionを利用するためのもの
+app.secret_key = 'test'
+app.permanent_session_lifetime = timedelta(minutes=15) 
 
 #インポートしたページを配列に格納する
 appSet = [
@@ -33,6 +38,7 @@ def error_500(error):
     print("500エラー")
     return redirect(url_for("systemMain.index"))
 #endregion
+
 
 if __name__ == "__main__":
     app.run(debug=True,port=8000)
