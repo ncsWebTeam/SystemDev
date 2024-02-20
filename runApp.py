@@ -1,12 +1,19 @@
-from flask import Flask,redirect
+#__pycache__が作成されないようにする
+import sys
+sys.dont_write_bytecode = True
+
+from flask import Flask,redirect,url_for
 #ページインポート
 from apps.systemMain import systemMain
+
 app = Flask(__name__)
 
+#インポートしたページを配列に格納する
 appSet = [
     systemMain
 ]
 
+#ここでページを登録する
 for appName in appSet:
     app.register_blueprint(appName)
 
@@ -14,18 +21,18 @@ for appName in appSet:
 @app.errorhandler(404) # 404エラーが発生した場合の処理
 def error_404(error):
     # print("404エラー")
-    return redirect("/")
+    return redirect(url_for("systemMain.index"))
 
 @app.errorhandler(405) # 405エラーが発生した場合の処理
 def error_405(error):
     print("405エラー")
-    return redirect("/")
+    return redirect(url_for("systemMain.index"))
 
 @app.errorhandler(500) # 500エラーが発生した場合の処理
 def error_500(error):
     print("500エラー")
-    return redirect("/")
+    return redirect(url_for("systemMain.index"))
 #endregion
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,port=8000)

@@ -1,14 +1,14 @@
-from flask import Flask, render_template, request, redirect,  session, send_from_directory ,Blueprint
+#__pycache__が作成されないようにする
+import sys
+sys.dont_write_bytecode = True
+
+from flask import render_template, request, redirect, Blueprint ,url_for
 from dataStore.MySQL import MySQL
-import datetime
-import os
+
 systemMain = Blueprint("systemMain",__name__)
-# app = Flask(__name__)
-systemMain.secret_key = "dajieteg9DSIngai"
-systemMain.permanent_session_lifetime = datetime.timedelta(minutes=30)
 
-AUTHORITY_LEVEL = 9
 
+#データベースを使うための情報
 dns = {
     'user': 'root',
     'host': 'localhost',
@@ -16,8 +16,11 @@ dns = {
     'database': 'System'
 }
 db = MySQL(**dns)
+
 #region データベース
-#----------------データベース関係--------------------STR↓
+'''
+ログイン管理
+'''
 def isLogin(name,password):
 
     sql = "SELECT password FROM member WHERE name=%s"
@@ -33,16 +36,17 @@ def isLogin(name,password):
     
     #一致していなかったら
     return False
-#----------------データベース関係--------------------END↑
+
 #endregion
 
+
 #region 画面
-#----------------ログイン画面処理--------------------STR↓
 @systemMain.route("/")
 def index(msg=None):
-    #ログイン画面表示
+    #メッセージを取得
     message = request.args.get('msg')
-    return render_template("system/systemLogin.html",msg = message, title="ログイン")
+    #ログイン画面表示
+    return render_template("system/system_login.html",err_msg = message, title="ログイン")
 
 @systemMain.route("/systemLoginCheck", methods=["POST"])
 def systemLoginCheck():
@@ -53,16 +57,16 @@ def systemLoginCheck():
 
     #ログイン処理
     if isLogin(userName,password):
-        return redirect("/home")
+        #ログインが成功したらホーム画面に移動する
+        return redirect(url_for('.home'))
     else:
-        return redirect("index",msg = "ユーザーネームかパスワードが間違っています")
-#----------------ログイン画面処理--------------------END↑
+        #失敗したらエラーメッセーとともにログイン画面に戻す
+        return redirect(url_for('.index', msg="名前かパスワードが間違っています"))
 
-#------------------ホーム画面------------------STR ↓
 @systemMain.route("/home")
 def home():
-    return render_template("system/home.html", title="ホーム")
-#----------------ホーム画面--------------------END↑
+    #ホーム画面を表示する
+    return render_template("system/system_home.html", title="ホーム")
 #endregion
 
 
