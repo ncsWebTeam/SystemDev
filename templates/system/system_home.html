@@ -1,6 +1,69 @@
 {% extends "temp.html" %}
 {% block content %}
+<div class="container">
+    <header class="p-3 mb-3 border-bottom">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+  
+            <span class="fs-4 col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 ms-4">システムホーム画面</span>
+            <div class="dropdown text-end">
+              <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/static/img/topImg.jpg" alt="mdo" width="32" height="32" class="rounded-circle">
+              </a>
+              <ul class="dropdown-menu text-small" style="">
+                <li><a class="dropdown-item" href="/home">ホーム</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/logout">サインアウト</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+    </header>
 
-<h2>HOME</h2>
-<a href="/logout">ログアウト</a>
+
+    <div class="row mb-2 mx-4 mt-4">
+        <!-- 一つ目のシステム -->
+        <div class="col-md-6">
+          <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+              <h3 class="mb-0 mt-4">障害対応機能</h3>
+              <div class="mb-1 text-body-secondary">2024年2月</div>
+              <p class="card-text mb-auto">障害対応機能の画面を実際につくった。</p>
+              <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                このシステムに飛ぶ
+                <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+              </a>
+            </div>
+            <div class="col-auto d-none d-lg-block">
+                <!-- imgを使った場合 -->
+                <!-- <img class="bd-placeholder-img" width="250" height="250"  src="/static/img/topImg.jpg" alt=""> -->
+
+              <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Placeholder: Thumbnail"><title>プレースホルダ</title><rect fill="#55595c" width="100%" height="100%"></rect><text fill="#eceeef" dy=".3em" x="50%" y="50%">サムネイル</text></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2つ目のシステム -->
+        <div class="col-md-6">
+          <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+              <h3 class="mb-0 mt-4">テスト</h3>
+              <div class="mb-1 text-body-secondary">XXXX年X月</div>
+              <p class="card-text mb-auto">これは、テスト用です</p>
+              <a href="/home" class="icon-link gap-1 icon-link-hover stretched-link">
+                テスト
+                <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+              </a>
+            </div>
+            <div class="col-auto d-none d-lg-block">
+              <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Placeholder: Thumbnail"><title>プレースホルダ</title><rect fill="#55595c" width="100%" height="100%"></rect><text fill="#eceeef" dy=".3em" x="50%" y="50%">サムネイル</text></svg>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      
+</div>
+<!-- <h2>HOME</h2>
+<a href="/logout">ログアウト</a> -->
 {% endblock %}
