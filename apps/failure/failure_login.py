@@ -6,7 +6,7 @@ from flask import render_template, request, redirect, Blueprint ,url_for,session
 from dataStore.MySQL import MySQL
 
 
-system_main = Blueprint("system_main",__name__)
+failure_login = Blueprint("failure_login",__name__)
 
 
 
@@ -15,7 +15,7 @@ dns = {
     'user': 'root',
     'host': 'localhost',
     'password': '',
-    'database': 'System'
+    'database': 'Failure'
 }
 db = MySQL(**dns)
 
@@ -23,10 +23,10 @@ db = MySQL(**dns)
 '''
 ログイン管理
 '''
-def is_login(name,password):
+def is_login(id,password):
 
-    sql = "SELECT password FROM member WHERE name=%s"
-    result = db.query(sql=sql,args=(name,))
+    sql = "SELECT password FROM employee WHERE id=%s"
+    result = db.query(sql=sql,args=(id,))
 
     #値がかえってこなかったら
     if not result:
@@ -46,45 +46,52 @@ def is_login(name,password):
 #endregion
 
 #region 画面
-@system_main.route("/")
+@failure_login.route("/failureLogin")
 def index(msg=None):
     #メッセージを取得
     message = request.args.get('msg')
     #ログイン画面表示
-    return render_template("system/system_login.html",err_msg = message, title="ログイン")
+    return render_template("failure/failure_login.html",err_msg = message, title="ログイン")
 
-@system_main.route("/systemLoginCheck", methods=["POST"])
+@failure_login.route("/failureLoginCheck", methods=["POST"])
 def system_login_check():
     
     # 入力値の取得
-    user_name = request.form.get("userName")
+    id = request.form.get("id")
     password = request.form.get("password")
 
     #ログイン処理
-    if is_login(user_name,password):
+    if is_login(id,password):
         #ログインが成功したら
         #セッションに名前を登録
         session.permanent = True
-        session["system_user"] = user_name
+        session["faikure_user"] = id
         #ホーム画面に移動する
         return redirect(url_for('.home'))
     else:
         #失敗したらエラーメッセーとともにログイン画面に戻す
+        print(id,password)
         return redirect(url_for('.index', msg="名前かパスワードが間違っています"))
 
-@system_main.route("/home")
+@failure_login.route("/failureHome")
 def home():
-    #sessionの確認
+    #sessionの確認(System用)
     if "system_user" in session:
-        #ホーム画面を表示する
-        return render_template("system/system_home.html", title="ホーム")
+        #sessionの確認(障害対応用)
+        if "faikure_user" in session:
+            #ホーム画面を表示する
+            return render_template("failure/failure_home.html", title="ホーム")
+        else:
+            return redirect(url_for('.index', msg="ログインしてください"))
     else:
-        return redirect(url_for('.index', msg="ログインしてください"))
+        return redirect(url_for('system_main.index', msg="ログインしてください"))
+    #sessionの確認
+
     
-@system_main.route("/logout")
+@failure_login.route("/failurLogout")
 def logout():
-    session.pop('system_user', None)
-    return redirect(url_for('.index'))
+    session.pop('faikure_user', None)
+    return redirect(url_for('system_main.index'))
 #endregion
 
 
