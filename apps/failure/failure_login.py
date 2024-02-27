@@ -10,10 +10,7 @@ sys.dont_write_bytecode = True
 from flask import render_template, request, redirect, Blueprint ,url_for,session
 from dataStore.MySQL import MySQL
 
-
 failure_login = Blueprint("failure_login",__name__)
-
-
 
 #データベースを使うための情報
 dns = {
@@ -78,7 +75,6 @@ def system_login_check():
         print(id,password)
         return redirect(url_for('.index', msg="名前かパスワードが間違っています"))
 
-    
 @failure_login.route("/failurLogout")
 def logout():
     session.pop('faikure_user', None)

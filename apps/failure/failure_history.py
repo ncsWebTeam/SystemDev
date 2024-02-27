@@ -1,6 +1,6 @@
 '''
 ログイン処理
-担当：kudou
+担当：
 '''
 
 #__pycache__が作成されないようにする
@@ -10,10 +10,7 @@ sys.dont_write_bytecode = True
 from flask import render_template, request, redirect, Blueprint ,url_for,session
 from dataStore.MySQL import MySQL
 
-
 failure_history = Blueprint("failure_history",__name__)
-
-
 
 #データベースを使うための情報
 dns = {

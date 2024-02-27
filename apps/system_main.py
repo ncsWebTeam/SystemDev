@@ -5,10 +5,7 @@ sys.dont_write_bytecode = True
 from flask import render_template, request, redirect, Blueprint ,url_for,session
 from dataStore.MySQL import MySQL
 
-
 system_main = Blueprint("system_main",__name__)
-
-
 
 #データベースを使うための情報
 dns = {
