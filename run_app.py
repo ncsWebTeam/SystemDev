@@ -28,6 +28,7 @@ appSet = [
 for appName in appSet:
     app.register_blueprint(appName)
 
+#アイコン用（仮）
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),

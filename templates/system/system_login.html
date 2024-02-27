@@ -14,7 +14,7 @@
 
 <body class="d-flex align-items-center py-4 bg-body-tertiary"></bodyclass>
   <main class="form-signin w-100 m-auto">
-    <form class="text-center" method="post" action="/systemLoginCheck">
+    <form class="text-center" method="post" action="{{ url_for('system_main.system_login_check')}}">
       <img class="mb-2" src="/static/images/topImg.jpg" alt="" width="100" height="100" loading="lazy">
 
       <!-- 名前かパスワードが間違っていた時用のメッセージ -->

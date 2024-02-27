@@ -48,15 +48,15 @@ def is_login(id,password):
 #endregion
 
 #region 画面
-@failure_login.route("/failureLogin")
-def index(msg=None):
+@failure_login.route("/failure/login")
+def login(msg=None):
     #メッセージを取得
     message = request.args.get('msg')
     #ログイン画面表示
     return render_template("failure/failure_login.html",err_msg = message, title="ログイン")
 
-@failure_login.route("/failureLoginCheck", methods=["POST"])
-def system_login_check():
+@failure_login.route("/failure/loginCheck", methods=["POST"])
+def login_check():
     
     # 入力値の取得
     id = request.form.get("id")
@@ -73,9 +73,9 @@ def system_login_check():
     else:
         #失敗したらエラーメッセーとともにログイン画面に戻す
         print(id,password)
-        return redirect(url_for('.index', msg="名前かパスワードが間違っています"))
+        return redirect(url_for('.login', msg="名前かパスワードが間違っています"))
 
-@failure_login.route("/failurLogout")
+@failure_login.route("/failur/logout")
 def logout():
     session.pop('faikure_user', None)
     return redirect(url_for('system_main.index'))

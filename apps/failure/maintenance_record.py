@@ -1,5 +1,5 @@
 '''
-障害履歴画面
+保守結果登録画面
 担当：
 '''
 
@@ -48,19 +48,6 @@ def is_login(id,password):
 #endregion
 
 #region 画面
-@failure_history.route("/failure/history")
-def history():
-    #sessionの確認(System用)
-    if "system_user" in session:
-        #sessionの確認(障害対応用)
-        if "faikure_user" in session:
-            #ホーム画面を表示する
-            return render_template("failure/failure_history.html", title="ホーム")
-        else:
-            return redirect(url_for('failure_login.login', msg="ログインしてください"))
-    else:
-        return redirect(url_for('system_main.index', msg="ログインしてください"))
-    #sessionの確認
 
 #endregion
 
