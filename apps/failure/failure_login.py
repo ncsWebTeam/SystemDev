@@ -1,3 +1,8 @@
+'''
+ログイン処理
+担当：kudou
+'''
+
 #__pycache__が作成されないようにする
 import sys
 sys.dont_write_bytecode = True
@@ -67,25 +72,11 @@ def system_login_check():
         session.permanent = True
         session["faikure_user"] = id
         #ホーム画面に移動する
-        return redirect(url_for('.home'))
+        return redirect(url_for('failure_history.history'))
     else:
         #失敗したらエラーメッセーとともにログイン画面に戻す
         print(id,password)
         return redirect(url_for('.index', msg="名前かパスワードが間違っています"))
-
-@failure_login.route("/failureHome")
-def home():
-    #sessionの確認(System用)
-    if "system_user" in session:
-        #sessionの確認(障害対応用)
-        if "faikure_user" in session:
-            #ホーム画面を表示する
-            return render_template("failure/failure_home.html", title="ホーム")
-        else:
-            return redirect(url_for('.index', msg="ログインしてください"))
-    else:
-        return redirect(url_for('system_main.index', msg="ログインしてください"))
-    #sessionの確認
 
     
 @failure_login.route("/failurLogout")

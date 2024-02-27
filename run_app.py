@@ -6,6 +6,8 @@ from flask import Flask,redirect,url_for,send_from_directory
 #ページインポート
 from apps.system_main import system_main
 from apps.failure.failure_login import failure_login
+from apps.failure.failure_history import failure_history
+
 
 from datetime import timedelta
 import os
@@ -18,7 +20,8 @@ app.permanent_session_lifetime = timedelta(minutes=15)
 #インポートしたページを配列に格納する
 appSet = [
     system_main,
-    failure_login
+    failure_login,
+    failure_history,
 ]
 
 #ここでページを登録する
